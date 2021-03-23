@@ -4,7 +4,6 @@ const url = new URL('../data/accounts.json' , import.meta.url)
 const filePath = fileURLToPath(url)
 
 class AccountService {
-
     async getAccounts(req, res) {
         //query string
         const type = req.query.type
@@ -12,7 +11,6 @@ class AccountService {
         let filtered = accounts.filter(acc => acc.acctType == type)
         res.json(filtered)
     }
-
     async addAccount(req, res) {
         const account = req.body
         const accounts = await fs.readJson(filePath)
