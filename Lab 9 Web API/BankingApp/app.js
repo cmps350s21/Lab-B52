@@ -15,6 +15,3 @@ app.get('/api/sayhi', (req, res)=>{
 app.listen(port, ()=>{
     console.log(`Server started @http://localhost:${port}`)
 })
-
-// node app.js
-// nodemon
