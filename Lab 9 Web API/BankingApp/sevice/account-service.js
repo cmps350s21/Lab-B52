@@ -1,61 +1,61 @@
-import fs from "fs-extra";
-import {fileURLToPath} from 'url'
-const url = new URL('../data/accounts.json' , import.meta.url)
-const filePath = fileURLToPath(url)
-
+import accountRepo from '../repository/account-repo.js'
 class AccountService {
     async getAccounts(req, res) {
-        //query string
-        const type = req.query.type
-        const accounts = await fs.readJson(filePath)
-        let filtered = accounts.filter(acc => acc.acctType == type)
-        res.json(filtered)
+        try{
+
+            const accounts = await accountRepo.getAccounts(req.query.type)
+            console.log(accounts)
+            res.status(200).json(accounts)
+        }catch(e){
+            res.status(500).json(e)
+        }
     }
     async addAccount(req, res) {
-        const account = req.body
-        const accounts = await fs.readJson(filePath)
+        try{
+            const account = req.body
+            res.send(await accountRepo.addAccount(account))
+        }catch(e){
+            res.status(500).json(e)
+        }
 
-        accounts.push(account)
-        await fs.writeJson(filePath, accounts)
-        res.send('We create the new account for you')
     }
 
     async updateAccount(req, res) {
-        const account = req.body
-        console.log(account)
-        const accounts = await fs.readJson(filePath)
-
-        const index = accounts.findIndex(acc => acc.accountNo == account.accountNo)
-        if (index >= 0) {
-            accounts[index] = account
-            await fs.writeJson(filePath, accounts)
-            res.json(accounts[index])
-        } else {
-            res.send('This account does not exit')
+        try{
+            const account = req.body
+            res.json(await accountRepo.addAccount(account))
+        }catch(e){
+            res.status(500).json(e)
         }
+
     }
 
     async getAccount(req, res) {
-        const acctNo = req.params.acctNo
-        const accounts = await fs.readJson(filePath)
-        const account = accounts.find(acc => acc.accountNo == acctNo)
-        // res.json(account)
-        res.send('/api/accounts/:acctNo')
+        try{
+            const acctNo = req.params.acctNo
+            res.json(await accountRepo.getAccount(acctNo))
+        }catch(e){
+            res.status(500).json(e)
+        }
+
     }
 
     async deleteAccount(req, res) {
-        const accountNo = req.params.accNo
-        const accounts = await fs.readJson(filePath)
-
-        const filtered = accounts.filter(acc => acc.accountNo != accountNo)
-        await fs.writeJson(filePath, filtered)
-        res.send(`Account No : ${accountNo} has been successfully deleted`)
+        try{
+            res.json(await accountRepo.deleteAccount(req.params.accNo))
+        }catch(e){
+            res.status(500).json(e)
+        }
 
     }
     async addTransaction(req, res) {
-        const accountNo = req.params.accNo
-        res.send('To be completed next week')
+        try{
+            const transaction = req.body
+            const trans = accountRepo.addTransaction(transaction)
+        }catch(e) {
+            res.status(500).json(e)
+        }
     }
 }
 
-export default AccountService
+export default new AccountService()

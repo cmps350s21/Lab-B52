@@ -1,10 +1,7 @@
 //web services [routes]
 //Reading
 import express from 'express'
-import AccountService from "./sevice/account-service.js";
-
-const accountService = new AccountService()
-
+import accountService from "./sevice/account-service.js";
 const router = express.Router()
 
 router.route('/accounts')

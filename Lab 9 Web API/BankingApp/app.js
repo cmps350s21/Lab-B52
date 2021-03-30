@@ -2,18 +2,18 @@ import express from 'express'
 import router from './router.js'
 
 //port number
-const port = 3000
+const port = 5000
 const app = express()
+
+
+//a middleware
+app.use(express.json())
 
 //two types [dynamic , static]
 app.use(express.static('public'))
 app.use('/api', router)
 
-//a middleware
-app.use(express.json())
-
 //CRUD operations on
-
 app.listen(port, () => {
     console.log(`Server started @http://localhost:${port}`)
 })
