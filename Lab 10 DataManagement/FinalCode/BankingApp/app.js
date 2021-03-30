@@ -1,15 +1,17 @@
 import express from 'express'
 import router from './router.js'
 import mongoose from 'mongoose'
+import morgan from 'morgan'
 
 //port number
 const port = 5000
 const app = express()
 
 //local database on your machine
-const URI = `mongodb://127.0.0.1:27017/banking-app`
+// const URI = `mongodb://127.0.0.1:27017/banking-app`
 
 //we want to connect to an online database
+const URI = `mongodb+srv://dbUser:dbUserPassword@cluster0.naay6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 const options = {useNewUrlParser: true, useUnifiedTopology: true}
 
@@ -25,6 +27,8 @@ app.use(express.json())
 
 //two types [dynamic , static]
 app.use(express.static('public'))
+
+app.use(morgan('dev'))
 app.use('/api', router)
 
 //CRUD operations on
