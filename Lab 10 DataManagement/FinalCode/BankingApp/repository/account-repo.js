@@ -3,21 +3,18 @@ import {fileURLToPath} from 'url'
 const url = new URL('../data/accounts.json' , import.meta.url)
 const filePath = fileURLToPath(url)
 
+import Account from '../model/account.js'
+import Transaction from '../model/transaction.js'
+
 class AccountRepo {
     async getAccounts(type){
-        const accounts = await fs.readJson(filePath)
-
-        if(type && type.toLowerCase() == 'current'||
-            type.toLowerCase() == 'saving'){
-            return accounts.filter(acc => acc.acctType.toLowerCase() == type.toLowerCase())
-        }else{
-            return accounts
-        }
+        if(type && type != 'All')
+            return Account.find({acctType : type})
+        else
+            return Account.find()
     }
     async addAccount(account){
-        const accounts = await fs.readJson(filePath)
-        accounts.push(account)
-        return await fs.writeJson(filePath, accounts)
+        return Account.create(account)
     }
     async updateAccount(updatedAccount){
         const accounts = await fs.readJson(filePath)

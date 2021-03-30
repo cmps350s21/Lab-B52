@@ -7,10 +7,9 @@ const port = 5000
 const app = express()
 
 //local database on your machine
-// const URI = `mongodb://127.0.0.1:27017/banking-app`
+const URI = `mongodb://127.0.0.1:27017/banking-app`
 
 //we want to connect to an online database
-const URI = `mongodb://127.0.0.1:27017/banking-app`
 
 const options = {useNewUrlParser: true, useUnifiedTopology: true}
 
@@ -18,6 +17,8 @@ const options = {useNewUrlParser: true, useUnifiedTopology: true}
 mongoose.connect(URI, options ,()=>{
     console.log('Connected to the database successfully')
 })
+
+// compass
 
 //a middleware
 app.use(express.json())
