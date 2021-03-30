@@ -1,9 +1,9 @@
 [
   {
-
-    "acctType": ,
+    "accountNo": 2002,
+    "acctType": "Saving",
     "balance": 8000,
-
+    "minimumBalance": 1000
   },
   {
     "accountNo": 1102,
