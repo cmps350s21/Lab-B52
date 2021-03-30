@@ -23,7 +23,7 @@ class AccountService {
     async updateAccount(req, res) {
         try{
             const account = req.body
-            res.json(await accountRepo.addAccount(account))
+            res.json(await accountRepo.updateAccount(account))
         }catch(e){
             res.status(500).json(e)
         }
@@ -42,7 +42,7 @@ class AccountService {
 
     async deleteAccount(req, res) {
         try{
-            res.json(await accountRepo.deleteAccount(req.params.accNo))
+            res.json(await accountRepo.deleteAccount(req.params.acctNo))
         }catch(e){
             res.status(500).json(e)
         }
